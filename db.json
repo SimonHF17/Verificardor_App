@@ -1,0 +1,52 @@
+{
+    "facturas": [
+      {
+        "id": 1,
+        "nombre": "Paracetamol 500mg",
+        "cantidad": 2,
+        "presentacion": "Caja x 10 tabletas"
+      },
+      {
+        "id": 2,
+        "nombre": "Amoxicilina 250mg",
+        "cantidad": 3,
+        "presentacion": "Frasco x 60ml"
+      },
+      {
+        "id": 3,
+        "nombre": "Ibuprofeno 400mg",
+        "cantidad": 1,
+        "presentacion": "Blíster x 12 unidades"
+      },
+      {
+        "id": 4,
+        "nombre": "Ibuprofeno 400mg",
+        "cantidad": 1,
+        "presentacion": "Blíster x 12 unidades"
+      },
+      {
+        "id": 5,
+        "nombre": "Ibuprofeno 400mg",
+        "cantidad": 1,
+        "presentacion": "Blíster x 12 unidades"
+      },
+      {
+        "id": 6,
+        "nombre": "Ibuprofeno 400mg",
+        "cantidad": 1,
+        "presentacion": "Blíster x 12 unidades"
+      },
+      {
+        "id": 7,
+        "nombre": "Ibuprofeno 400mg",
+        "cantidad": 1,
+        "presentacion": "Blíster x 12 unidades"
+      },
+      {
+        "id": 8,
+        "nombre": "Ibuprofeno 400mg",
+        "cantidad": 1,
+        "presentacion": "Blíster x 12 unidades"
+      }
+    ]
+  }
