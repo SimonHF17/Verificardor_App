@@ -1,5 +1,5 @@
 import axios from  'axios'
-const baseUrl = 'http://l27.0.0.1:3000/facturas'
+const baseUrl = 'http://172.16.32.5:3000/facturas'
 
 const getAll = () => {
     const request = axios.get(baseUrl)

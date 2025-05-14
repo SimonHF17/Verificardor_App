@@ -57,49 +57,39 @@ const PantallaHome = ( {navigation}) => {
 
       <Modal
         visible={scanned}
-        animationType="slide"
-        transparent={true} // Fondo semitransparente para el modal
+        animationType="fade"
+        transparent={true}
       >
-    {/* Contenedor principal del modal (fondo semitransparente) */}
-    <View style={styles.modalOverlay}>
-      {/* Nueva tarjeta contenedora (fondo gris claro) */}
-      <Card style={styles.containerCard}>
-        <Card.Content>
-          {/* Tarjeta de factura escaneada (fondo blanco) */}
-          <Card style={styles.innerCard}>
-            <Card.Content>
-              <Text variant="titleLarge" style={styles.cardTitle}>
-                Factura escaneada
-              </Text>
-              <Text variant="bodyMedium" style={styles.cardContent}>
-                {text || 'No hay código escaneado'}
-              </Text>
-            </Card.Content>
-          </Card>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>🎉 Código Escaneado</Text>
+            <View style={styles.modalBox}>
+              <Text style={styles.modalCode}>{text || 'No hay código escaneado'}</Text>
+            </View>
 
-          {/* Botón VERDE (Escanear nuevamente) */}
-          <Button
-            mode="contained"
-            onPress={() => setScanned(false)}
-            style={styles.buttonScanAgain}
-            labelStyle={styles.buttonLabel}
-          >
-            ESCANEAR NUEVAMENTE
-          </Button>
+            <Button
+              mode="contained"
+              icon="camera"
+              onPress={() => setScanned(false)}
+              style={styles.modalButton}
+              labelStyle={styles.buttonLabel}
+            >
+              ESCANEAR NUEVAMENTE
+            </Button>
 
-          {/* Botón AZUL (Ir a comprar) */}
-          <Button
-            mode="contained"
-            onPress={() => navigation.navigate('PantallaCompra')}
-            style={styles.buttonGoToBuy}
-            labelStyle={styles.buttonLabel}
-          >
-            IR A COMPRAR
-          </Button>
-            </Card.Content>
-          </Card>
+            <Button
+              mode="contained"
+              icon="cart"
+              onPress={() => navigation.navigate('PantallaCompra')}
+              style={[styles.modalButton, { backgroundColor: '#1976D2' }]}
+              labelStyle={styles.buttonLabel}
+            >
+              IR A COMPRAR
+            </Button>
+          </View>
         </View>
-    </Modal>
+      </Modal>
+
     </View>
   );
 };
@@ -119,47 +109,51 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: 'tomato'
   },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo oscuro semitransparente
-  },
-  containerCard: {
-    width: '90%',
-    backgroundColor: '#f5f5f5', // Gris claro para la tarjeta contenedora
-    borderRadius: 10,
-    padding: 15,
-  },
-  innerCard: {
-    backgroundColor: 'white', // Fondo blanco para la tarjeta de factura
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#e0e0e0', // Borde sutil
-  },
-  cardTitle: {
-    textAlign: 'center',
-    marginBottom: 10,
-    color: '#333',
-  },
-  cardContent: {
-    textAlign: 'center',
-    color: '#666',
-  },
-  buttonScanAgain: {
-    width: '100%',
-    marginTop: 10,
-    backgroundColor: '#4CAF50', // Verde
-  },
-  buttonGoToBuy: {
-    width: '100%',
-    marginTop: 10,
-    backgroundColor: '#2196F3', // Azul
-  },
-  buttonLabel: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
+modalOverlay: {
+  flex: 1,
+  backgroundColor: 'rgba(0,0,0,0.6)',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: 20,
+},
+modalContent: {
+  backgroundColor: '#fff',
+  borderRadius: 20,
+  padding: 24,
+  width: '100%',
+  maxWidth: 350,
+  alignItems: 'center',
+  elevation: 6,
+},
+modalTitle: {
+  fontSize: 20,
+  fontWeight: 'bold',
+  color: '#2E7D32',
+  marginBottom: 20,
+  textAlign: 'center',
+},
+modalBox: {
+  backgroundColor: '#f1f8e9',
+  borderRadius: 12,
+  padding: 16,
+  marginBottom: 20,
+  width: '100%',
+},
+modalCode: {
+  fontSize: 16,
+  color: '#33691E',
+  textAlign: 'center',
+},
+modalButton: {
+  width: '100%',
+  marginTop: 12,
+  backgroundColor: '#4CAF50',
+  borderRadius: 8,
+},
+buttonLabel: {
+  color: 'white',
+  fontWeight: '600',
+},
 });
 
 export default PantallaHome;

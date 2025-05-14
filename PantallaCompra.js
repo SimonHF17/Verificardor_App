@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-//import facturaService from './services/facturas';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import facturaService from './services/facturas';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { Card } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
-import axios from 'axios';
 
 const PantallaCompra = () => {
   const [facturas, setFacturas] = useState([]);
@@ -11,11 +10,11 @@ const PantallaCompra = () => {
   const [totalFacturas, setTotalFacturas] = useState(0);
 
   useEffect(() => {
-    fetch('http://172.16.32.3:3000/facturas') // Ajusta el puerto si usas JSON Server con otra configuración
-      .then(response => response.json())
+    facturaService
+      .getAll()
       .then(data => {
         setFacturas(data);
-        setTotalFacturas(data.length); // Total de facturas
+        setTotalFacturas(data.length);
         setLoading(false);
       })
       .catch(error => {
@@ -24,34 +23,34 @@ const PantallaCompra = () => {
       });
   }, []);
 
-
   const renderItem = ({ item }) => (
-    <Card style={styles.card}>
+    <Card style={styles.card} mode="elevated">
       <View style={styles.cardContent}>
+        <View style={styles.iconWrapper}>
+          <FontAwesome name="shopping-cart" size={20} color="#ffffff" />
+        </View>
+
         <View style={styles.textContainer}>
           <Text style={styles.title}>{item.nombre}</Text>
           <Text style={styles.details}>Cantidad: {item.cantidad}</Text>
           <Text style={styles.details}>Presentación: {item.presentacion}</Text>
         </View>
-        <FontAwesome name="shopping-cart" size={24} color="black" style={styles.icon} />
       </View>
     </Card>
   );
-  
+
   if (loading) {
     return (
-      <View style={styles.container}>
-        <Text>Cargando facturas...</Text>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="green" />
+        <Text style={{ marginTop: 10 }}>Cargando productos...</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-
-      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20, marginTop: 20, color: 'green' }}>
-        Total de Productos {totalFacturas}
-      </Text>
+      <Text style={styles.header}>🛒   Lista de Productos ({totalFacturas})</Text>
 
       <FlatList
         data={facturas}
@@ -66,55 +65,59 @@ const PantallaCompra = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#f8f9fa',
-    paddingTop: 20,
+    backgroundColor: '#F0F4F8',
+    paddingHorizontal: 16,
+    paddingTop: 24,
+  },
+  header: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#2E7D32',
+    marginBottom: 20,
+    marginTop: 20,
+    textAlign: 'center',
   },
   list: {
     paddingBottom: 20,
   },
   card: {
-    marginVertical: 15,
-    borderRadius: 16,                // Bordes más redondeados
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,              // Sombra sutil
-    shadowRadius: 6,
-    elevation: 3,
-    borderWidth: 1,                  // Borde sutil
-    borderColor: 'rgba(0,0,0,0.05)', // Borde casi transparente
-    overflow: 'hidden',              // Para bordes redondeados en imágenes (si las agregas)
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: 'green',                // Negro con tono suave
-    marginBottom: 6,
-    fontFamily: 'System',            // Usa la fuente del sistema para modernidad
-  },
-  details: {
-    fontSize: 14,
-    color: '#666666',
-    marginBottom: 4,
-    lineHeight: 20,
+    backgroundColor: '#f1f8e9',
+    borderRadius: 16,
+    marginVertical: 10,
+    elevation: 4,
   },
   cardContent: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
+    padding: 25,
+  },
+  iconWrapper: {
+    backgroundColor: '#2E7D32',
+    borderRadius: 25,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 32,
   },
   textContainer: {
     flex: 1,
   },
-  icon: {
-    marginLeft: 16,
-    marginRight:20,
-  },  
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2E7D32',
+    marginBottom: 4,
+  },
+  details: {
+    fontSize: 14,
+    color: '#555',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default PantallaCompra;
