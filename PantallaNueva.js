@@ -1,89 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, ImageBackground, StatusBar, Image } from 'react-native';
 import { Card, Button, Text, Provider } from 'react-native-paper';
 import imagen from './assets/rio.png';
-
+import imagenFondo from './assets/fondo.png';
 
 const PantallaNueva = ({ navigation }) => {
-  const [currentDateTime, setCurrentDateTime] = useState('');
-
-
-  useEffect(() => {
-    const updateDateTime = () => {
-      const now = new Date();
-      const date = now.toLocaleDateString();
-      const time = now.toLocaleTimeString();
-      setCurrentDateTime(`${date} - ${time}`);
-    };
-
-    // Actualizar la fecha y hora cada segundo
-    const interval = setInterval(updateDateTime, 1000);
-    updateDateTime(); // Llamar inmediatamente para evitar un retraso inicial
-
-    // Limpiar el intervalo al desmontar el componente
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <Provider>
-      <View style={styles.container}>
-      <Image 
+      {/* Ocultamos la barra de estado para que no haya franjas */}
+      <StatusBar hidden />
+
+      {/* ImageBackground ocupa toda la pantalla */}
+      <ImageBackground
+        source={imagenFondo}
+        style={styles.background}
+        resizeMode="cover" // cubre toda el área, recortando si es necesario
+      >
+        <View style={styles.overlay}>
+          <Image 
           source={imagen}
           style={styles.imagen}
           />
-        {/* Título principal */}
-        <Text style={styles.title}>Verificacion de Compra</Text>
+          <Text style={styles.title}>Verificación de Compra</Text>
 
-        {/* Botón "Empezar ahora" */}
-        <Button
-          mode="contained"
-          onPress={() => navigation.navigate('PantallaHome')}
-          style={styles.button}
-          labelStyle={styles.buttonText}
-        >
-          ESCANEAR AHORA
-        </Button>
-      </View>
+          <Button
+            mode="contained"
+            onPress={() => navigation.navigate('PantallaHome')}
+            style={styles.button}
+            labelStyle={styles.buttonText}
+          >
+            ESCANEAR AHORA
+          </Button>
+        </View>
+      </ImageBackground>
     </Provider>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  // Este overlay centra su contenido y deja fondo transparente
+  overlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: 'white', // Color de fondo
+    // opcional: si quieres un ligero oscurecimiento para mejorar contraste:
+    // backgroundColor: 'rgba(0,0,0,0.3)',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'green',
+    color: 'white',     // blanco sobre fondo
     marginBottom: 20,
     textAlign: 'center',
-  },
-  card: {
-    width: '90%',
-    marginBottom: 20,
-    elevation: 4, // Sombra en Android
-    shadowColor: '#000', // Sombra en iOS
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-  },
-  cardText: {
-    fontSize: 18,
-    textAlign: 'center',
-    marginVertical: 8,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   button: {
-    width: '35%',
-    backgroundColor: 'green', // Color del botón
-    marginTop: 16,
+    width: '60%',
+    backgroundColor: 'rgba(0,128,0,0.8)', // verde semitransparente
+    borderRadius: 8,
+    paddingVertical: 6,
   },
   buttonText: {
-    color: 'white', // Color del texto del botón
+    color: 'white',
     fontWeight: 'bold',
   },
   imagen: {
@@ -95,3 +80,5 @@ const styles = StyleSheet.create({
 });
 
 export default PantallaNueva;
+
+
